@@ -57,7 +57,9 @@
               )
 
   ;; TraitImplDecl -- an impl of a trait for a type
-  (Rust/TraitImplDecl ::= (impl KindedVarIds TraitId UserParameters for UserTy where Rust/WhereClauses Rust/ImplItems))
+  (Rust/TraitImplDecl ::= (impl KindedVarIds TraitId UserParameters for UserTy where Rust/WhereClauses Rust/ImplItems) Rust/TraitNegImplDecl)
+  ;; Negative impl of a trait. note that negative impls have no ImplItems
+  (Rust/TraitNegImplDecl ::= (impl KindedVarIds ! TraitId UserParameters for UserTy where Rust/WhereClauses { }))
 
   ;; Impl item(s)
   (Rust/ImplItems ::= { Rust/ImplItem ... })

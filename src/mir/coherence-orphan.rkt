@@ -23,12 +23,12 @@
   #:contract (✅-OrphanRules DeclProgram TraitImplDecl)
 
   [(where/error (CrateDecls CrateId) DeclProgram)
-   (where/error (impl _ (TraitId _) where _ _) TraitImplDecl)
+   (where/error (_ _ (TraitId _) where _ _) TraitImplDecl)
    (where CrateId (crate-defining-trait-with-id CrateDecls TraitId))
    ------------------------------- "orphan--trait-is-in-current-crate"
    (✅-OrphanRules DeclProgram TraitImplDecl)]
 
-  [(where/error (impl KindedVarIds (_ (Parameter_self Parameter_other ...)) where WhereClauses _) TraitImplDecl)
+  [(where/error (_ KindedVarIds (_ (Parameter_self Parameter_other ...)) where WhereClauses _) TraitImplDecl)
    (is-local-parameter DeclProgram Parameter_self)
    ------------------------------- "orphan--self-is-local"
    (✅-OrphanRules DeclProgram TraitImplDecl)]

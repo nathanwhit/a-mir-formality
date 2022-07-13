@@ -83,7 +83,8 @@
   ;; Trait impls
   ;;
   ;; Note that trait impls do not have names.
-  (TraitImplDecl ::= (impl KindedVarIds TraitRef where WhereClauses ImplItems))
+  (TraitImplDecl ::= (TraitImplPolarity KindedVarIds TraitRef where WhereClauses ImplItems))
+  (TraitImplPolarity ::= impl !impl)
 
   ;; Named statics
   (StaticDecl ::= (static StaticId KindedVarIds where WhereClauses : Ty = FnBody))
@@ -138,10 +139,10 @@
               ((ParameterKind VarId) ...)
               where WhereClauses #:refers-to (shadow VarId ...)
               TraitItems #:refers-to (shadow VarId ...))
-  (impl ((ParameterKind VarId) ...)
-        TraitRef #:refers-to (shadow VarId ...)
-        where WhereClauses #:refers-to (shadow VarId ...)
-        ImplItems #:refers-to (shadow VarId ...))
+  (TraitImplPolarity ((ParameterKind VarId) ...)
+                     TraitRef #:refers-to (shadow VarId ...)
+                     where WhereClauses #:refers-to (shadow VarId ...)
+                     ImplItems #:refers-to (shadow VarId ...))
   (const ConstId
          ((ParameterKind VarId) ...)
          where WhereClauses #:refers-to (shadow VarId ...)

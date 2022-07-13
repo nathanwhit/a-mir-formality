@@ -44,6 +44,13 @@
        where [(lower-to-decl/WhereClause Rust/WhereClause) ...]
        { (lower-to-decl/TraitItem Rust/TraitItem) ... })]
 
+  [(lower-to-decl/CrateItemDecl (impl KindedVarIds ! TraitId[UserParameter ...] for UserTy
+                                      where [Rust/WhereClause ...]
+                                      { }))
+   (!impl KindedVarIds (TraitId [(user-ty UserTy) (user-parameter UserParameter) ...])
+          where [(lower-to-decl/WhereClause Rust/WhereClause) ...]
+          { })]
+
   [(lower-to-decl/CrateItemDecl (impl KindedVarIds TraitId[UserParameter ...] for UserTy
                                       where [Rust/WhereClause ...]
                                       { Rust/ImplItem ... }))
