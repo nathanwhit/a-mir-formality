@@ -35,7 +35,7 @@
    (where/error [(ParameterKind_val VarId_val) ...] [KindedVarId_val ...])
 
    ; find the declaration of this associated type
-   (where/error (trait TraitId KindedVarIds_trait where WhereClauses_trait TraitItems_trait) (trait-with-id CrateDecls TraitId))
+   (where/error (_ trait TraitId KindedVarIds_trait where WhereClauses_trait TraitItems_trait) (trait-with-id CrateDecls TraitId))
    (where/error [_ ... (type AssociatedTyId KindedVarIds_decl BoundsClause_decl where WhereClauses_decl) _ ...] TraitItems_trait)
    (where/error [(_ VarId_trait) ...] KindedVarIds_trait)
 

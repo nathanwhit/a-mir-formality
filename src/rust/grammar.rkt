@@ -30,7 +30,9 @@
   ;; TraitDecl -- trait declaration
   ;;
   ;; In this layer, the `(type Self)` parameter is NOT explicitly written.
-  (Rust/TraitDecl ::= (trait TraitId KindedVarIds where Rust/WhereClauses Rust/TraitItems))
+  (Rust/TraitDecl ::= (trait TraitId KindedVarIds where Rust/WhereClauses Rust/TraitItems) Rust/TraitDeclWithFlags)
+  ;; Trait declared with flags e.g. (auto)
+  (Rust/TraitDeclWithFlags ::= (TraitFlags trait TraitId KindedVarIds where Rust/WhereClauses Rust/TraitItems))
 
   ;; Trait item(s)
   (Rust/TraitItems ::= { Rust/TraitItem ... })

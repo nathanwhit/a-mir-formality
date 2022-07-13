@@ -30,12 +30,19 @@
    (where [(VariantId [Rust/FieldDecl ...]) ...] Rust/AdtVariants)
    ]
 
+  [(lower-to-decl/CrateItemDecl (TraitFlags trait TraitId [KindedVarId ...]
+                                            where [Rust/WhereClause ...]
+                                            { Rust/TraitItem ... }))
+   (TraitFlags trait TraitId [(type Self) KindedVarId ...]
+               where [(lower-to-decl/WhereClause Rust/WhereClause) ...]
+               { (lower-to-decl/TraitItem Rust/TraitItem) ... })]
+
   [(lower-to-decl/CrateItemDecl (trait TraitId [KindedVarId ...]
                                        where [Rust/WhereClause ...]
                                        { Rust/TraitItem ... }))
-   (trait TraitId [(type Self) KindedVarId ...]
-          where [(lower-to-decl/WhereClause Rust/WhereClause) ...]
-          { (lower-to-decl/TraitItem Rust/TraitItem) ... })]
+   (() trait TraitId [(type Self) KindedVarId ...]
+       where [(lower-to-decl/WhereClause Rust/WhereClause) ...]
+       { (lower-to-decl/TraitItem Rust/TraitItem) ... })]
 
   [(lower-to-decl/CrateItemDecl (impl KindedVarIds TraitId[UserParameter ...] for UserTy
                                       where [Rust/WhereClause ...]

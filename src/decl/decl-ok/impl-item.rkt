@@ -30,7 +30,7 @@
    (where/error (fn FnId (KindedVarId ...) (Ty_arg ...) -> Ty_ret where [WhereClause ...] _) FnDecl)
 
    ; find the declaration of this associated type
-   (where/error (trait TraitId KindedVarIds_trait where WhereClauses_trait TraitItems_trait) (trait-with-id CrateDecls TraitId))
+   (where/error (_ trait TraitId KindedVarIds_trait where WhereClauses_trait TraitItems_trait) (trait-with-id CrateDecls TraitId))
    (where/error (_ ... (fn FnId KindedVarIds_trait-fn (Ty_trait-fn-arg ...) -> Ty_trait-fn-ret where WhereClauses_trait-fn _) _ ...) TraitItems_trait)
    (where/error ((_ VarId_trait) ...) KindedVarIds_trait)
 
@@ -103,7 +103,7 @@
    (where/error (type AssociatedTyId (KindedVarId ...) = Ty where WhereClauses) AssociatedTyValue)
 
    ; find the declaration of this associated type
-   (where/error (trait TraitId KindedVarIds_trait where WhereClauses_trait TraitItems_trait) (trait-with-id CrateDecls TraitId))
+   (where/error (_ trait TraitId KindedVarIds_trait where WhereClauses_trait TraitItems_trait) (trait-with-id CrateDecls TraitId))
    (where/error (_ ... (type AssociatedTyId KindedVarIds_trait-ty BoundsClause_trait-ty where WhereClauses_trait-ty) _ ...) TraitItems_trait)
    (where/error ((_ VarId_trait) ...) KindedVarIds_trait)
 

@@ -46,7 +46,9 @@
   ;; TraitDecl -- trait Foo { ... }
   ;;
   ;; Unlike in Rust, the `KindedVarIds` here always include with `(type Self)` explicitly.
-  (TraitDecl ::= (trait TraitId KindedVarIds where WhereClauses TraitItems))
+  (TraitDecl ::= (TraitFlags trait TraitId KindedVarIds where WhereClauses TraitItems))
+  (TraitFlag ::= auto)
+  (TraitFlags ::= (TraitFlag ...))
 
   ;; TraitItem --
   (TraitItems ::= (TraitItem ...))
@@ -132,10 +134,10 @@
            ((ParameterKind VarId) ...)
            where WhereClauses #:refers-to (shadow VarId ...)
            AdtVariants #:refers-to (shadow VarId ...))
-  (trait TraitId
-         ((ParameterKind VarId) ...)
-         where WhereClauses #:refers-to (shadow VarId ...)
-         TraitItems #:refers-to (shadow VarId ...))
+  (TraitFlags trait TraitId
+              ((ParameterKind VarId) ...)
+              where WhereClauses #:refers-to (shadow VarId ...)
+              TraitItems #:refers-to (shadow VarId ...))
   (impl ((ParameterKind VarId) ...)
         TraitRef #:refers-to (shadow VarId ...)
         where WhereClauses #:refers-to (shadow VarId ...)
@@ -181,7 +183,7 @@
 (define-metafunction formality-decl
   trait-decl-id : TraitDecl -> TraitId
 
-  ((trait-decl-id (trait TraitId _ where _ _)) TraitId)
+  ((trait-decl-id (_ trait TraitId _ where _ _)) TraitId)
   )
 
 (define-metafunction formality-decl
@@ -213,10 +215,10 @@
   trait-with-id : CrateDecls TraitId -> TraitDecl
 
   [(trait-with-id CrateDecls TraitId)
-   (trait TraitId KindedVarIds where WhereClauses TraitItems)
+   (TraitFlags trait TraitId KindedVarIds where WhereClauses TraitItems)
 
    (where (_ ... CrateDecl _ ...) CrateDecls)
-   (where (crate _ (_ ... (trait TraitId KindedVarIds where WhereClauses TraitItems) _ ...)) CrateDecl)
+   (where (crate _ (_ ... (TraitFlags trait TraitId KindedVarIds where WhereClauses TraitItems) _ ...)) CrateDecl)
    ]
   )
 
@@ -228,7 +230,7 @@
    CrateId
 
    (where (_ ... CrateDecl _ ...) CrateDecls)
-   (where (crate CrateId (_ ... (trait TraitId _ where _ _) _ ...)) CrateDecl)
+   (where (crate CrateId (_ ... (_ trait TraitId _ where _ _) _ ...)) CrateDecl)
    ]
   )
 
