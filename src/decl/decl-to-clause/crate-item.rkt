@@ -179,6 +179,14 @@
                                        ImplItem) ...])
    ]
 
+  [;; For a negative impl in the crate C, like the following
+   ;;
+   ;;    impl !Sync for Foo { }
+   ;;
+   ;; we don't create any clauses
+   (crate-item-decl-rules _ _ (!impl KindedVarIds TraitRef where _ _))
+   (() ())]
+
   [;; For a function declared in the crate C, like the following
    ;;
    ;;     fn foo<'a, T>(&'a T) -> &'a T { ... }

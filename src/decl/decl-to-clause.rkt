@@ -2,6 +2,7 @@
 (require redex/reduction-semantics
          "grammar.rkt"
          "../logic/env.rkt"
+         "decl-to-clause/auto-trait.rkt"
          "decl-to-clause/crate-decl.rkt"
          "decl-to-clause/default-rules.rkt")
 (provide decl-invariants
@@ -14,6 +15,14 @@
   ;; Create the clauses for solving a given predicate
   ;; (right now the predicate is not used).
   decl-clauses-for-predicate : Env DeclProgram Predicate -> Clauses
+
+  [(decl-clauses-for-predicate Env DeclProgram (has-impl (TraitId (Ty))))
+   (Clause_program ... Clause_auto ...)
+   (where/error (CrateDecls _) DeclProgram)
+   (where #t (is-auto-trait CrateDecls TraitId))
+   (where/error ((Clause_program ...) _) (program-rules DeclProgram))
+   (where/error (Clause_auto ...) (auto-trait-decl-rules CrateDecls TraitId Ty))
+   ]
 
   [(decl-clauses-for-predicate Env DeclProgram Predicate)
    Clauses

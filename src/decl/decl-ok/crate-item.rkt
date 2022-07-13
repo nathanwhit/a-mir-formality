@@ -105,6 +105,28 @@
                                                     ImplItem) ...))
    ]
 
+  [
+   (crate-item-ok-goal CrateDecls (!impl KindedVarIds_impl (TraitId (Parameter_trait ...)) where WhereClauses_impl (ImplItem ...)))
+   (∀ KindedVarIds_impl
+      (implies
+       (; assuming all generic parameters are WF...
+        (well-formed KindedVarId_impl) ...
+        ; ...all inputs are WF...
+        (well-formed (ParameterKind_trait Parameter_trait)) ...
+        ; ...where-clauses are satisfied...
+        (where-clause->hypothesis CrateDecls WhereClause_impl) ...)
+       (&& (
+            ; then where clauses must be WF
+            (well-formed-where-clause-goal CrateDecls WhereClause_impl) ...
+            ))))
+   ; negative impls are only permitted for auto traits (currently)
+   (where/error ((_ ... auto _ ...) trait TraitId ((ParameterKind_trait _) ...) where _ _) (trait-with-id CrateDecls TraitId))
+   (where/error (KindedVarId_impl ...) KindedVarIds_impl)
+   (where/error (WhereClause_impl ...) WhereClauses_impl)
+   ; negative impls shouldn't have any impl items
+   (where/error () (ImplItem ...))
+   ]
+
   [;; For a constant declared in the crate C, like the following:
    ;;
    ;;     const NAMED<T>: Foo<T> where T: Trait;
