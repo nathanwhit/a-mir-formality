@@ -16,14 +16,15 @@
 
    (; test that Send check fails
     ;
-    ; FIXME(#26)  when we support auto traits, we'll need a neg impl here
     redex-let*
     formality-rust
     [(; static S: Foo = ...;
       Rust/StaticDecl (term (static S[] where [] : (Foo < >) = trusted-fn-body)))
-
+     (; impl Send for Foo
+      Rust/TraitImplDecl_Unsync (term (impl[(type T)] ! core:Sync[] for (Foo < >) where [] { })))
      (Rust/CrateDecl (term (crate TheCrate { Rust/AdtDecl_Foo
                                              Rust/StaticDecl
+                                             Rust/TraitImplDecl_Unsync
                                              })))
      ]
 
@@ -36,16 +37,12 @@
 
    (; test that Sync check succeeds when an impl is present
     ;
-    ; FIXME(#26)  when we support auto traits, we won't need an impl here
     redex-let*
     formality-rust
     [(; static S: Foo = ...;
       Rust/StaticDecl (term (static S[] where [] : (Foo < >) = trusted-fn-body)))
-     (; impl Send for Foo
-      Rust/TraitImplDecl_Sync (term (impl[(type T)] core:Sync[] for (Foo < >) where [] { })))
      (Rust/CrateDecl (term (crate TheCrate { Rust/AdtDecl_Foo
                                              Rust/StaticDecl
-                                             Rust/TraitImplDecl_Sync
                                              })))
      ]
 

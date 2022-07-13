@@ -12,8 +12,8 @@
     formality-rust
     [(Rust/CrateDecl
       (term (crate core { (trait core:Sized[] where[] {})
-                          (trait core:Send[] where[] {})
-                          (trait core:Sync[] where[] {})
+                          ((auto) trait core:Send[] where[] {})
+                          ((auto) trait core:Sync[] where[] {})
                           (trait core:Copy[] where[] {})
                           (trait core:Drop[] where[] {})
                           (impl[] core:Copy[] for u32 where [] {})
